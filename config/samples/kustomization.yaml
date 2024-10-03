@@ -1,0 +1,4 @@
+## Append samples of your project ##
+resources:
+- custom.io_v1_task.yaml
+# +kubebuilder:scaffold:manifestskustomizesamples
