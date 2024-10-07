@@ -1,0 +1,23 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"monitoring.coreos.com/v1","kind":"ServiceMonitor","metadata":{"annotations":{},"labels":{"app.kubernetes.io/managed-by":"kustomize","app.kubernetes.io/name":"task-operator","control-plane":"controller-manager"},"name":"task-operator-controller-manager-metrics-monitor","namespace":"task-operator-system"},"spec":{"endpoints":[{"bearerTokenFile":"/var/run/secrets/kubernetes.io/serviceaccount/token","path":"/metrics","port":"https","scheme":"https","tlsConfig":{"insecureSkipVerify":true}}],"selector":{"matchLabels":{"control-plane":"controller-manager"}}}}
+  labels:
+    app.kubernetes.io/managed-by: kustomize
+    app.kubernetes.io/name: task-operator
+    control-plane: controller-manager
+  name: task-operator-controller-manager-metrics-monitor
+  namespace: monitoring
+spec:
+  endpoints:
+  - bearerTokenFile: /var/run/secrets/kubernetes.io/serviceaccount/token
+    path: /metrics
+    port: https
+    scheme: https
+    tlsConfig:
+      insecureSkipVerify: true
+  selector:
+    matchLabels:
+      control-plane: controller-manager

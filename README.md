@@ -1,8 +1,14 @@
 # task-operator
-// TODO(user): Add simple overview of use/purpose
+Kubernetes Controller to manage "Task" CRD
 
 ## Description
-// TODO(user): An in-depth paragraph about your project and overview of use
+Task CRD has
+-   schedule
+-   command
+which is required to create native kubernetes jobs. It also have 
+-   state
+-   lastExecutionTime
+fields to monitor the state
 
 ## Getting Started
 
@@ -16,7 +22,7 @@
 **Build and push your image to the location specified by `IMG`:**
 
 ```sh
-make docker-build docker-push IMG=<some-registry>/task-operator:tag
+make docker-build docker-push IMG=docker.io/thirunandagopal/task-operator:tag
 ```
 
 **NOTE:** This image ought to be published in the personal registry you specified.
@@ -86,7 +92,7 @@ its dependencies.
 Users can just run kubectl apply -f <URL for YAML BUNDLE> to install the project, i.e.:
 
 ```sh
-kubectl apply -f https://raw.githubusercontent.com/<org>/task-operator/<tag or branch>/dist/install.yaml
+kubectl apply -f https://raw.githubusercontent.com/ThiruNandagopal/task-operator/main/dist/install.yaml
 ```
 
 ## Contributing

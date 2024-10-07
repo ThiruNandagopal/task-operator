@@ -11,5 +11,23 @@ roleRef:
   name: manager-role
 subjects:
 - kind: ServiceAccount
-  name: controller-manager
-  namespace: system
+  name: task-operator-controller-manager
+  namespace: task-operator-system
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  labels:
+    app.kubernetes.io/name: task-operator
+    app.kubernetes.io/managed-by: kustomize
+  name: manager-rolebinding-jobs
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: manager-role
+subjects:
+- kind: ServiceAccount
+  name: task-operator-controller-manager
+  namespace: task-operator-system

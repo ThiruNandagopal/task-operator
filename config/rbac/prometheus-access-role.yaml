@@ -1,0 +1,25 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: task-operator-system
+  name: prometheus-endpoints-role
+rules:
+  - apiGroups: [""]
+    resources: ["endpoints","services","pods"]
+    verbs: ["get", "list", "watch"]
+
+---
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  namespace: task-operator-system
+  name: prometheus-endpoints-binding
+subjects:
+  - kind: ServiceAccount
+    name: prometheus-k8s
+    namespace: monitoring
+roleRef:
+  kind: Role
+  name: prometheus-endpoints-role
+  apiGroup: rbac.authorization.k8s.io

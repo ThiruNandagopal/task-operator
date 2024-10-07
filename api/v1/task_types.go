@@ -29,13 +29,16 @@ type TaskSpec struct {
 	// Important: Run "make" to regenerate code after modifying this file
 
 	// Foo is an example field of Task. Edit task_types.go to remove/update
-	Foo string `json:"foo,omitempty"`
+	Command  string `json:"command"`
+	Schedule string `json:"schedule"`
 }
 
 // TaskStatus defines the observed state of Task
 type TaskStatus struct {
 	// INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
+	State             string `json:"state"`
+	LastExecutionTime string `json:"lastExecutionTime"`
 }
 
 // +kubebuilder:object:root=true

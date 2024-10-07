@@ -21,3 +21,12 @@ rules:
   - tasks/status
   verbs:
   - get
+- apiGroups:
+  - batch
+  resources:
+  - cronjob
+  - job
+  verbs:
+  - get
+  - list
+  - watch

@@ -8,5 +8,5 @@ roleRef:
   name: metrics-auth-role
 subjects:
 - kind: ServiceAccount
-  name: controller-manager
-  namespace: system
+  name: task-operator-controller-manager
+  namespace: task-operator-system

@@ -1,28 +1,20 @@
-<<<<<<< HEAD
 # If you prefer the allow list template instead of the deny list, see community template:
 # https://github.com/github/gitignore/blob/main/community/Golang/Go.AllowList.gitignore
 #
-=======
->>>>>>> 91a0e90 (initial commit)
 # Binaries for programs and plugins
 *.exe
 *.exe~
 *.dll
 *.so
 *.dylib
-<<<<<<< HEAD
-=======
 bin/*
 Dockerfile.cross
->>>>>>> 91a0e90 (initial commit)
-
 # Test binary, built with `go test -c`
 *.test
 
 # Output of the go coverage tool, specifically when used with LiteIDE
 *.out
 
-<<<<<<< HEAD
 # Dependency directories (remove the comment below to include it)
 # vendor/
 
@@ -32,10 +24,6 @@ go.work.sum
 
 # env file
 .env
-=======
-# Go workspace file
-go.work
-
 # Kubernetes Generated files - skip generated files, except for vendored files
 !vendor/**/zz_generated.*
 
@@ -45,4 +33,4 @@ go.work
 *.swp
 *.swo
 *~
->>>>>>> 91a0e90 (initial commit)
+.DS_Store
