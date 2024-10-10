@@ -19,6 +19,7 @@ package controller
 import (
 	"context"
 	"sort"
+	"time"
 
 	"github.com/go-logr/logr"
 	"k8s.io/apimachinery/pkg/runtime"
@@ -50,6 +51,13 @@ const (
 	JobStatusRunning   = "Running"
 	JobStatusCompleted = "Completed"
 	JobStatusFailed    = "Failed"
+	maxRequests        = 1 // Max Request allowed for Demo
+	resetDuration      = 30 * time.Second
+)
+
+var (
+	requests  int
+	lastReset time.Time
 )
 
 // +kubebuilder:rbac:groups=custom.io.intuit.com,resources=tasks,verbs=get;list;watch;create;update;patch;delete
@@ -61,16 +69,20 @@ const (
 // Triggered when ever Task and Cronjob is created/modified
 func (r *TaskReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Result, error) {
 
+	res := rateLimit()
+	if res {
+		fmt.Println("req not processed due to rate limt->", req.Name)
+		return ctrl.Result{}, nil
+
+	}
+	fmt.Println("req processed ->", req.Name)
 	// process task CRD request
 	task := &customiov1.Task{}
 
 	log := pkgLog.FromContext(ctx).WithValues("Task", task.Name, "Namespace", task.Namespace)
 	log.Info("Reconciling Task")
 
-	err := r.Get(ctx, req.NamespacedName, task)
-	if err != nil {
-		return ctrl.Result{}, client.IgnoreNotFound(err)
-	}
+	// Rate Limt
 
 	// Generate the CronJob object
 	cronJob := CreateCronJob(task)
@@ -80,7 +92,7 @@ func (r *TaskReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.
 		log.Error(err, "Error setting owner reference for cron job")
 	}
 
-	err = r.Create(ctx, cronJob)
+	err := r.Create(ctx, cronJob)
 	if err != nil {
 		// log and Metrics
 
@@ -329,4 +341,24 @@ func TaskMetricUpdater(taskList *customiov1.TaskList) {
 
 	}
 
+}
+
+func rateLimit() bool {
+	// Reset the counter if the time window has passed
+	fmt.Println("maxRequests->", maxRequests)
+	fmt.Println("resetDuration->", resetDuration)
+	fmt.Println("requests->", requests)
+	fmt.Println("lastReset->", lastReset)
+
+	if time.Since(lastReset) > resetDuration {
+		requests = 0
+		lastReset = time.Now()
+	}
+
+	// Check if the request can be allowed
+	if requests < maxRequests {
+		requests++
+		return true
+	}
+	return false
 }

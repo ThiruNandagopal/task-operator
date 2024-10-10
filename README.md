@@ -3,11 +3,15 @@ Kubernetes Controller to manage "Task" CRD
 
 ## Description
 Task CRD has
+```
 -   schedule
 -   command
+```
 which is required to create native kubernetes jobs. It also have 
+```
 -   state
 -   lastExecutionTime
+```
 fields to monitor the state
 
 ## Getting Started

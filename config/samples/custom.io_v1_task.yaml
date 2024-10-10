@@ -4,7 +4,7 @@ metadata:
   labels:
     app.kubernetes.io/name: task-operator
     app.kubernetes.io/managed-by: kustomize
-  name: task-sample-5
+  name: task-sample-4
   namespace: task-operator-system
 spec:
   command: "echo Hello World"

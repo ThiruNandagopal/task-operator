@@ -11,11 +11,11 @@ CronJob -> Job: Create Job
 CronJob -> TaskOperator: Watches
 TaskOperator -> TaskCRD: Updates Task Status
 
-Job -> TaskOperator: Fetch Job Status
-TaskOperator -> TaskCRD: Updates Task Status
-
 Job -> Pod: Creates Pod
 Pod -> Pod: Execute commands
+
+Job -> TaskOperator: Fetch Job Status
+TaskOperator -> TaskCRD: Updates Task Status
 
 Prometheus -> TaskOperator: Scrapes Metrics
 
